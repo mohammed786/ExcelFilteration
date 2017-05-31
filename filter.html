@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div>
+    <label for="fname">Enter Your File</label>
+    <label id="upload" for="xlf">Browse...</label>
+     <input type="file" name="xlfile" id="xlf" />
+	<label><span>Enter Start date of Week (YYYY-MM-DD)</span><br/><input type="text" value="" maxlength="4" id="year"/>-<input type="text" value="" maxlength="2" id="month"/>-<input type="text" value="" maxlength="2" id="day" /></label>
+  
+    <button onclick="process_wb();"> Process File </button>
+</div>
+<br/>
+<!--<pre id="out"></pre>-->
+<div id="output">
+<table width="100%">
+    <tr>
+        <th>
+            &nbsp;
+        </th>
+        <th>
+        Monthly Data    
+        </th>
+        <th>
+        Weekly Data
+        </th>
+    </tr>
+     <tr>
+        <th>
+        Incidents
+        </th>
+        <td>
+        <label id="mInc"></label><br/>   
+        </td>
+        <td>
+        <label id="wInc"></label><br/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+        Tasks
+        </th>
+        <td>
+        <label id="mTask"></label><br/>   
+        </td>
+        <td>
+        <label id="wTask"></label><br/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+        CTasks
+        </th>
+        <td>
+        <label id="mCTask"></label><br/>   
+        </td>
+        <td>
+        <label id="wCTask"></label><br/>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="3">
+        Backlog Data
+        </th>
+    </tr>
+    <tr>
+        <th width="50%">
+            Incident More than Week
+        </th>
+        <td colspan="2">
+        <label id="mWeek"></label><br/>
+        </td>
+        
+    </tr>
+    <tr>
+        <th width="50%">
+            Incident Less than Week
+        </th>
+        <td colspan="2">
+        <label id="lWeek"></label><br/>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="3">
+            Incidents this week
+        </th>
+    </tr>
+    <tr>
+        <td colspan="3">
+        <label id="inc"></label>
+        </td>
+    </tr>
+</table>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/shim.js"></script>
+<script src="js/xlsx.full.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
