@@ -22,8 +22,10 @@ var wb;
             if (isNaN(weekstart.getTime())) {  
                 throw "Date in not valid"
             }
-            var weekend = new Date();
-            weekend.setDate(weekstart.getDate() + 6);
+            var weekend = new Date(weekstart);
+            weekend.setDate(weekstart.getDate() + 6)
+            weekend.setHours(0,0,0,0)
+            weekstart.setHours(0,0,0,0)
             to_json(wb,function(data){
                   //out.innerText = JSON.stringify(data,2,2);
                   var incident = [0,0];
@@ -34,7 +36,9 @@ var wb;
                   var incidents = []
                   for(var i = 0;i<data.length;i++){
                      var createdDate = new Date(data[i]["Created"]);
-                     if(createdDate.getMonth() == weekstart.getMonth() && createdDate.getFullYear() == weekstart.getFullYear() && createdDate.getDate() <= weekend.getDate()){
+                     createdDate.setHours(0,0,0,0)
+                     
+                     if(createdDate.getMonth() == weekstart.getMonth() && createdDate.getFullYear() == weekstart.getFullYear() && createdDate <= weekend){
                          var cat = data[i]["Number"].replace(/[0-9]/g, '');
                          if(cat === 'INC')
                              incident[0]++;
@@ -42,8 +46,12 @@ var wb;
                              ctask[0]++;
                          if(cat === 'TASK')
                              task[0]++;
-                         if(createdDate >= weekstart){
+                     }
+                      
+                     if(createdDate >= weekstart && createdDate <= weekend){
+                             var cat = data[i]["Number"].replace(/[0-9]/g, '');
                              if(cat === 'INC'){
+                                console.log(createdDate)
                                 incident[1]++;
                                 incidents.push(data[i]["Number"])
                              }
@@ -51,22 +59,21 @@ var wb;
                                  ctask[1]++;
                              if(cat === 'TASK')
                                  task[1]++;
-                         }
                      }
-                     if(!(data[i]["State"].includes("Resolved") || data[i]["State"].includes("Closed"))){
-                         if(createdDate.getMonth() == 4 && createdDate.getFullYear() == 2017 && createdDate.getDate() <= 20 && createdDate.getDate() >= 14)
+                     if(!(data[i]["State"].includes("Resolved") || data[i]["State"].includes("Closed")) && (cat === 'INC' || cat == 'TASK')){
+                         if(createdDate >= weekstart && createdDate <= weekend)
                              inWeek++;
                          else if(createdDate <= weekstart)
                              outWeek++;
                      }
                   }
                   mInc.innerText = incident[0];
-                  mTask.innerText = ctask[0];
-                  mCTask.innerText = task[0];
+                  mTask.innerText = task[0];
+                  mCTask.innerText = ctask[0];
 
                   wInc.innerText =  incident[1];
-                  wTask.innerText =  ctask[1];
-                  wCTask.innerText = task[1];
+                  wTask.innerText =  task[1];
+                  wCTask.innerText = ctask[1];
 
                   mWeek.innerText = outWeek;
                   lWeek.innerText = inWeek;
